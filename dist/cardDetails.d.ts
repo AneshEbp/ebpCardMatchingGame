@@ -1,8 +1,3 @@
-type CardDetails = {
-    id: number;
-    image: string;
-    matched: boolean;
-};
+import type { CardDetails } from "./types/cardDetails";
 export declare const cardDetails: CardDetails[];
-export {};
 //# sourceMappingURL=cardDetails.d.ts.map
