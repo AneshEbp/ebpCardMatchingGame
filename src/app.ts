@@ -1,23 +1,47 @@
-import {cardDetails} from './cardDetails'
-import type { CardDetails } from './types/cardDetails';
-import { shuffledCard } from './shufflecard';
-import {saveToLocalStorage, getItemFromLocalStorage, removeItemFromLocalStorage} from './localStorage'
+import {cardDetails} from './cardDetails.js'
+import type { CardDetails } from './types/cardDetails.js';
+import { shuffledCard } from './shufflecard.js';
+import {saveToLocalStorage, getItemFromLocalStorage, removeItemFromLocalStorage} from './localStorage.js'
 
 let shuffleCard:CardDetails[]=[]
 let numberOfTry:number=0;
 let isProcessing:boolean=false;
+let clickedCard:{
+    firstCardId:number;
+    secondCardId:number;
+}={
+    firstCardId:-1,
+    secondCardId:-1
+};
+
 
 const numberOfTryBtn=document.getElementById('tryId');
 const startGameBtn=document.getElementById('startGame');
+
+function restartBtn():void{
+    console.log("function entered");
+      if(numberOfTry!=0 && startGameBtn){
+                        if(startGameBtn.innerText=='Start Game')
+                        {
+                            startGameBtn.innerText="Restart Game"
+                        }
+                    }
+}
 startGameBtn?.addEventListener('click',()=>{
     console.log("clicked startbtn");
-    startGameBtn.innerText='Restart Game';
+     if(startGameBtn.innerText=='Restart Game')
+         {
+            removeItemFromLocalStorage("shuffledCard");
+            removeItemFromLocalStorage("numberOfTry")
+            location.reload();
+        }
 })
 
 if(getItemFromLocalStorage("numberOfTry")){
     numberOfTry=parseInt(JSON.parse(getItemFromLocalStorage("numberOfTry")))
      if(numberOfTryBtn){
         numberOfTryBtn.innerText=`Number of tries : ${numberOfTry} `;
+        restartBtn();
     }
 }
 
@@ -29,76 +53,9 @@ shuffleCard=shuffledCard(shuffleCard);
 saveToLocalStorage("shuffledCard",JSON.stringify(shuffleCard));
 }
 
-let clickedCard:{
-    firstCardId:number;
-    secondCardId:number;
-}={
-    firstCardId:-1,
-    secondCardId:-1
-};
 
-function initializedCard(): void {
-    const ele=document.getElementById("cardContainer");
-    shuffleCard.forEach((item,index:number)=>{
-        if(ele !== null)
-        if(!item.matched){
-            console.log("false one")
-                ele.innerHTML += `<div id=${index} class="cardContainerItem">
-            <img id=img-${index} src=${item.image} alt="">
-            <p>${item.value}</p>
-                                </div>`;
-            }else{
-                console.log("true one")
-                ele.innerHTML += `<div id=${index} class="cardContainerItem removeimg showText">
-            <img id=img-${index} src=${item.image} alt="" >
-            <p>${item.value}</p>
-                                </div>`;
-            }
-    })
-    console.log(shuffleCard)
-
-        ele?.addEventListener("click",(event)=>{
-            if(isProcessing){
-                return;
-            }
-           const target = event.target as HTMLElement;
-            if(target.tagName==="IMG"){
-              const parentCard = target.closest(".cardContainerItem");
-              console.log(parentCard);
-    
-              let id:number;
-              if(parentCard !== null){
-                  id=parseInt(parentCard.id);
-                  console.log(id);
-                   parentCard?.classList.add("removeimg")
-                   parentCard?.classList.add("showText")
-                if(clickedCard?.firstCardId == -1 ){
-                    clickedCard.firstCardId=id;
-                }else if(clickedCard?.firstCardId != -1 && clickedCard?.secondCardId == -1){
-                    clickedCard.secondCardId=id;
-                    numberOfTry++;
-                    saveToLocalStorage("numberOfTry", JSON.stringify(numberOfTry))
-                  
-                    if(numberOfTryBtn){
-                        numberOfTryBtn.innerText=`Number of tries : ${numberOfTry} `;
-                    }
-                    isProcessing=true;
-                    compareCards(clickedCard);
-                }
-              }
-        }
-    })
-    }
-   
-
-initializedCard();
 
 function compareCards(compareCardsProps:{ firstCardId:number; secondCardId:number;}):void{
-
-        console.log("id of one:"+compareCardsProps.firstCardId)
-        console.log("id of one:"+compareCardsProps.secondCardId)
-
-        console.log(shuffleCard[compareCardsProps.firstCardId])
         if(shuffleCard[compareCardsProps.firstCardId]?.value == shuffleCard[compareCardsProps.secondCardId]?.value ){
            
                const match1= shuffleCard[compareCardsProps.firstCardId];
@@ -120,7 +77,10 @@ function compareCards(compareCardsProps:{ firstCardId:number; secondCardId:numbe
                     console.log("rechaed here");
                     removeItemFromLocalStorage("shuffledCard");
                     removeItemFromLocalStorage("numberOfTry")
-                    alert("you have won the game")
+                    setTimeout(()=>{
+                        alert("you have won the game")
+                        location.reload();
+                    },1000)
                 }
             })
             isProcessing=false;
@@ -140,3 +100,60 @@ function compareCards(compareCardsProps:{ firstCardId:number; secondCardId:numbe
             },2000)
         }
     }
+
+
+function initializedCard(): void {
+    const ele=document.getElementById("cardContainer");
+    shuffleCard.forEach((item,index:number)=>{
+        if(ele !== null)
+        if(!item.matched){
+            console.log("false one")
+                ele.innerHTML += `<div id=${index} class="cardContainerItem">
+            <img id=img-${index} src=${item.image} alt="">
+            <p>${item.value}</p>
+                                </div>`;
+            }else{
+                console.log("true one")
+                ele.innerHTML += `<div id=${index} class="cardContainerItem removeimg showText">
+            <img id=img-${index} src=${item.image} alt="" >
+            <p>${item.value}</p>
+                                </div>`;
+            }
+    })
+        ele?.addEventListener("click",(event)=>{
+            if(isProcessing){
+                return;
+            }
+           const target = event.target as HTMLElement;
+            if(target.tagName==="IMG"){
+              const parentCard = target.closest(".cardContainerItem");
+              console.log(parentCard);
+    
+              let id:number;
+              if(parentCard !== null){
+                  id=parseInt(parentCard.id);
+                  console.log(id);
+                   parentCard?.classList.add("removeimg")
+                   parentCard?.classList.add("showText")
+                if(clickedCard?.firstCardId == -1 ){
+                    clickedCard.firstCardId=id;
+                }else if(clickedCard?.firstCardId != -1 && clickedCard?.secondCardId == -1){
+                    clickedCard.secondCardId=id;
+                    numberOfTry++;
+                    restartBtn();
+                    saveToLocalStorage("numberOfTry", JSON.stringify(numberOfTry))
+                  
+                    if(numberOfTryBtn){
+                        numberOfTryBtn.innerText=`Number of tries : ${numberOfTry} `;
+                    }
+                    isProcessing=true;
+                    compareCards(clickedCard);
+                }
+              }
+        }
+    })
+    }
+   
+
+initializedCard();
+

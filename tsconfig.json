@@ -43,6 +43,7 @@
     // "moduleDetection": "force",
     "skipLibCheck": true,
     
+    // "verbatimModuleSyntax": true   
 
   }
 }
