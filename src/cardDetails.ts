@@ -1,5 +1,5 @@
 
-import type {CardDetails} from "./types/cardDetails"
+import type {CardDetails} from "./types/cardDetails.type"
 export const cardDetails: CardDetails[] = [
     { id: 1, image: "./img/thumbnail.png", value:"Apple", matched: false },
     { id: 2, image: "./img/thumbnail.png", value:"Banana", matched: false },

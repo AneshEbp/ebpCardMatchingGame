@@ -1,15 +1,13 @@
 import {cardDetails} from './cardDetails.js'
-import type { CardDetails } from './types/cardDetails.js';
+import type { CardDetails } from './types/cardDetails.type.js';
 import { shuffledCard } from './shufflecard.js';
 import {saveToLocalStorage, getItemFromLocalStorage, removeItemFromLocalStorage} from './localStorage.js'
+import type { ClickedCard } from './types/clickedCard.type.js';
 
 let shuffleCard:CardDetails[]=[]
 let numberOfTry:number=0;
 let isProcessing:boolean=false;
-let clickedCard:{
-    firstCardId:number;
-    secondCardId:number;
-}={
+let clickedCard:ClickedCard={
     firstCardId:-1,
     secondCardId:-1
 };
@@ -27,6 +25,7 @@ function restartBtn():void{
                         }
                     }
 }
+
 startGameBtn?.addEventListener('click',()=>{
     console.log("clicked startbtn");
      if(startGameBtn.innerText=='Restart Game')
@@ -64,7 +63,6 @@ function compareCards(compareCardsProps:{ firstCardId:number; secondCardId:numbe
                     match1.matched=true;
                 if(match2)
                     match2.matched=true;
-            console.log(shuffleCard+"from matched");
             saveToLocalStorage("shuffledCard",JSON.stringify(shuffleCard));
             clickedCard.firstCardId=-1;
             clickedCard.secondCardId=-1;
@@ -74,19 +72,16 @@ function compareCards(compareCardsProps:{ firstCardId:number; secondCardId:numbe
                     countTrue++;
                 if(countTrue==12)
                 {
-                    console.log("rechaed here");
                     removeItemFromLocalStorage("shuffledCard");
                     removeItemFromLocalStorage("numberOfTry")
                     setTimeout(()=>{
                         alert("you have won the game")
-                        location.reload();
+                         location.reload();
                     },1000)
                 }
             })
             isProcessing=false;
-            console.log("matched");
         }else{
-            console.log("unmatched");
             setTimeout(()=>{
                 const card1=document.getElementById(`${compareCardsProps.firstCardId}`)
                 const card2=document.getElementById(`${compareCardsProps.secondCardId}`)
@@ -100,7 +95,6 @@ function compareCards(compareCardsProps:{ firstCardId:number; secondCardId:numbe
             },2000)
         }
     }
-
 
 function initializedCard(): void {
     const ele=document.getElementById("cardContainer");
