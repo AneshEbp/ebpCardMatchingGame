@@ -1,4 +1,4 @@
 export type ClickedCard = {
-    firstCardId:number;
-    secondCardId:number;
-}
+  firstCardId: number;
+  secondCardId: number;
+};
