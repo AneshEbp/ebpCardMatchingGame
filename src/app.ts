@@ -27,7 +27,6 @@ function restartBtn():void{
 }
 
 startGameBtn?.addEventListener('click',()=>{
-    console.log("clicked startbtn");
      if(startGameBtn.innerText=='Restart Game')
          {
             removeItemFromLocalStorage("shuffledCard");
@@ -103,14 +102,14 @@ function initializedCard(): void {
         if(!item.matched){
             console.log("false one")
                 ele.innerHTML += `<div id=${index} class="cardContainerItem">
-            <img id=img-${index} src=${item.image} alt="">
-            <p>${item.value}</p>
-                                </div>`;
+            <img id=img-${index} src='./img/thumbnail.png' alt="">
+            <p><img src=${item.valueImage} alt=${item.value}></p>
+                    </div>`;
             }else{
                 console.log("true one")
                 ele.innerHTML += `<div id=${index} class="cardContainerItem removeimg showText">
-            <img id=img-${index} src=${item.image} alt="" >
-            <p>${item.value}</p>
+            <img id=img-${index} src='./img/thumbnail.png' alt="" >
+            <p><img src=${item.valueImage} alt=${item.value}></p>
                                 </div>`;
             }
     })

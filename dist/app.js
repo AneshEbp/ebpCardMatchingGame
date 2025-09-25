@@ -19,7 +19,6 @@ function restartBtn() {
     }
 }
 startGameBtn === null || startGameBtn === void 0 ? void 0 : startGameBtn.addEventListener('click', () => {
-    console.log("clicked startbtn");
     if (startGameBtn.innerText == 'Restart Game') {
         removeItemFromLocalStorage("shuffledCard");
         removeItemFromLocalStorage("numberOfTry");
@@ -50,7 +49,6 @@ function compareCards(compareCardsProps) {
             match1.matched = true;
         if (match2)
             match2.matched = true;
-        console.log(shuffleCard + "from matched");
         saveToLocalStorage("shuffledCard", JSON.stringify(shuffleCard));
         clickedCard.firstCardId = -1;
         clickedCard.secondCardId = -1;
@@ -59,7 +57,6 @@ function compareCards(compareCardsProps) {
             if (item.matched == true)
                 countTrue++;
             if (countTrue == 12) {
-                console.log("rechaed here");
                 removeItemFromLocalStorage("shuffledCard");
                 removeItemFromLocalStorage("numberOfTry");
                 setTimeout(() => {
@@ -69,10 +66,8 @@ function compareCards(compareCardsProps) {
             }
         });
         isProcessing = false;
-        console.log("matched");
     }
     else {
-        console.log("unmatched");
         setTimeout(() => {
             const card1 = document.getElementById(`${compareCardsProps.firstCardId}`);
             const card2 = document.getElementById(`${compareCardsProps.secondCardId}`);
@@ -93,15 +88,15 @@ function initializedCard() {
             if (!item.matched) {
                 console.log("false one");
                 ele.innerHTML += `<div id=${index} class="cardContainerItem">
-            <img id=img-${index} src=${item.image} alt="">
-            <p>${item.value}</p>
-                                </div>`;
+            <img id=img-${index} src='./img/thumbnail.png' alt="">
+            <p><img src=${item.valueImage} alt=${item.value}></p>
+                    </div>`;
             }
             else {
                 console.log("true one");
                 ele.innerHTML += `<div id=${index} class="cardContainerItem removeimg showText">
-            <img id=img-${index} src=${item.image} alt="" >
-            <p>${item.value}</p>
+            <img id=img-${index} src='./img/thumbnail.png' alt="" >
+            <p><img src=${item.valueImage} alt=${item.value}></p>
                                 </div>`;
             }
     });

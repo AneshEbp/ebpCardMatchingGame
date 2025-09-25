@@ -8,7 +8,7 @@
     border-radius: 8px;
     text-align: center;
     justify-content: center;
-    margin-top: 6px;
+    color: aliceblue;
 }
 .titleContainer button{
     padding: 12px 24px;
@@ -25,10 +25,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
+  padding-bottom: 16px;
 }
 .cardContainer{
-    border: 1px solid red;
     width: 60%;
     display: flex;
     flex-wrap: wrap;
@@ -41,11 +40,8 @@
   
     align-items: center;
     width: 20%;
-    height: 250px;
-    border: 1px solid lightgray;
-    border-radius: 8px;
+    height: 235px;
     margin: 8px;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0.3, 0.1);
 }
 
 .cardContainerItem img{
@@ -77,13 +73,23 @@
   justify-content: center;
   align-items: center;
 }
-.showText p{
+.showText > p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; 
+  width: 100%;
+}
+.showText>p>img{
   display: block !important;
+  height: 100%;
+  width: 100%;
   justify-content: center;
   text-align: center;
   align-items: center;
   justify-items: center;
   font-size: 48px;
+  object-fit: cover;
 
    /* Animation */
   opacity: 0;
@@ -96,4 +102,11 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.bgDiv{
+    background-image: url('./img/bg.jpeg');
+  background-size: cover;      /* cover entire area */
+  background-position: center; /* center the image */
+  background-repeat: no-repeat;
 }

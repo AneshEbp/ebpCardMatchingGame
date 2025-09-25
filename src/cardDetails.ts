@@ -1,11 +1,11 @@
 
 import type {CardDetails} from "./types/cardDetails.type"
 export const cardDetails: CardDetails[] = [
-    { id: 1, image: "./img/thumbnail.png", value:"Apple", matched: false },
-    { id: 2, image: "./img/thumbnail.png", value:"Banana", matched: false },
-    { id: 3, image: "./img/thumbnail.png", value:"Mango", matched: false },
-    { id: 4, image: "./img/thumbnail.png", value:"Orange",matched: false },
-    { id: 5, image: "./img/thumbnail.png",  value:"Gauva", matched: false },
-    { id: 6, image: "./img/thumbnail.png", value:"Grapes", matched: false },  
-   
+    { id: 1,  value:"Apple", valueImage:'./img/apple.jpg', matched: false },
+    { id: 2,  value:"Banana", valueImage:'./img/banana.jpeg', matched: false },
+    { id: 3,  value:"Mango", valueImage:'./img/manago.jpeg', matched: false },
+    { id: 4,  value:"Orange", valueImage:'./img/orange.jpeg', matched: false },
+    { id: 5,  value:"Gauva", valueImage:'./img/gauva.jpeg', matched: false },
+    { id: 6,  value:"Grapes", valueImage:'./img/grapes.jpeg', matched: false },
+
 ];
